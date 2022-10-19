@@ -1,6 +1,6 @@
 ---
 title: "Gov 50 Final Project"
-author: "Your Name Here"
+author: "Robert Savage"
 description: "My final project"
 output:
   distill::distill_article:
@@ -11,4 +11,4 @@ output:
 
 ## Project thoughts
 
-I am interested in exploring data related to...
+I am choosing to write about veteran suicide rates because I served in the Marine Corps for four years and I have experienced a lot of my friends and leaders commit suicide. I find this topic important to talk about because suicide rates among veterans are rising. Also, they are the ones signing up to protect our country with their lives and we as citizens of the United States of America need to be informed about this crisis and find out how to help the men and women that served our country and find a way to prevent this crisis. 
