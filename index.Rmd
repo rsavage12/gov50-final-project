@@ -7,8 +7,12 @@ output:
     self_contained: false
 ---
 
+```{r}
+library(tidyverse)
+read_csv("Vetsgi.csv")
+```
 
 
 ## Project thoughts
 
-I am choosing to write about veteran suicide rates because I served in the Marine Corps for four years and I have experienced a lot of my friends and leaders commit suicide. I find this topic important to talk about because suicide rates among veterans are rising. Also, they are the ones signing up to protect our country with their lives and we as citizens of the United States of America need to be informed about this crisis and find out how to help the men and women that served our country and find a way to prevent this crisis. 
+My research question is what is affecting the veterans that have the G.I. Bill awarded to them after their service to not utilize it, in their perspective states from 2010-2015. The data I will be utilizing is from https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits and https://dataverse.harvard.edu/file.xhtml?fileId=6153230&version=7.0. My hypothesis is that there can be multiple variables that can be the cause of this problem, such as: race, political affiliation, location, and socio-economic status. The explanatory variables are as listed before. To give an example of what my theory for one of the potential theories are is socio-economic status. Some veterans may have a low paying job and cannot afford to sacrifice their time to go to school and have to work instead. The outcome variable is the percentage of veterans out of the veterans in their perspective state that utilize their education benefits. The observed pattern in my hypothesis is that there are no states that has a one percent of veterans that use their education benefits. At this time I cannot find a pattern that could disprove my hypothesis from of these variables. 
