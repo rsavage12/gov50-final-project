@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","Veterans_who_used_GI_Bill_Education_Benefits.numbers","Vetsgi.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1517,9 +1517,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"Vetsgi.csv"</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 312 × 5
+   `State Name` Percent of Veterans who used G…¹ Numbe…² Veter…³  Year
+   &lt;chr&gt;                                   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
+ 1 Alabama                                0.0273   11226 411845.  2010
+ 2 Alabama                                0.0259   10420 402854.  2011
+ 3 Alabama                                0.0332   13145 395992.  2012
+ 4 Alabama                                0.0381   14856 389780.  2013
+ 5 Alabama                                0.0385   14850 385511.  2014
+ 6 Alabama                                0.0313   11797 377310.  2015
+ 7 Alaska                                 0.0323    2450  75897.  2010
+ 8 Alaska                                 0.0306    2378  77641.  2011
+ 9 Alaska                                 0.0475    3566  75056.  2012
+10 Alaska                                 0.0551    4178  75812.  2013
+# … with 302 more rows, and abbreviated variable names
+#   ¹​`Percent of Veterans who used GI Bill Education Benefits`,
+#   ²​`Number of Education Benefit Recipients`, ³​`Veteran Population`</code></pre>
+</div>
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am choosing to write about veteran suicide rates because I served in the Marine Corps for four years and I have experienced a lot of my friends and leaders commit suicide. I find this topic important to talk about because suicide rates amongst veterans are rising. Also, they are the ones signing up to protect our country with their lives and we as citizens of the United States of America need to be informed about this crisis and find out how to help the men and women that served our country and find a way to prevent this crisis.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>My research question is what is affecting the veterans that have the G.I. Bill awarded to them after their service to not utilize it, in their perspective states from 2010-2015. The data I will be utilizing is from <a href="https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits" class="uri">https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits</a> and <a href="https://dataverse.harvard.edu/file.xhtml?fileId=6153230&amp;version=7.0" class="uri">https://dataverse.harvard.edu/file.xhtml?fileId=6153230&amp;version=7.0</a>. My hypothesis is that there can be multiple variables that can be the cause of this problem, such as: race, political affiliation, location, and socio-economic status. The explanatory variables are as listed before. To give an example of what my theory for one of the potential theories are is socio-economic status. Some veterans may have a low paying job and cannot afford to sacrifice their time to go to school and have to work instead. The outcome variable is the percentage of veterans out of the veterans in their perspective state that utilize their education benefits. The observed pattern in my hypothesis is that there are no states that has a one percent of veterans that use their education benefits. At this time I cannot find a pattern that could disprove my hypothesis from of these variables.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
