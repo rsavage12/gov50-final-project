@@ -16,3 +16,49 @@ read_csv("Vetsgi.csv")
 ## Project thoughts
 
 My research question is what is affecting the veterans that have the G.I. Bill awarded to them after their service to not utilize it, in their perspective states from 2010-2015. The data I will be utilizing is from https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits and https://dataverse.harvard.edu/file.xhtml?fileId=6153230&version=7.0. My hypothesis is that there can be multiple variables that can be the cause of this problem, such as: race, political affiliation, location, and socio-economic status. The explanatory variables are as listed before. To give an example of what my theory for one of the potential theories are is socio-economic status. Some veterans may have a low paying job and cannot afford to sacrifice their time to go to school and have to work instead. The outcome variable is the percentage of veterans out of the veterans in their perspective state that utilize their education benefits. The observed pattern in my hypothesis is that there are no states that has a one percent of veterans that use their education benefits. At this time I cannot find a pattern that could disprove my hypothesis from of these variables. 
+
+
+# Importing and cleaning data 
+```{r include=FALSE}
+library(tidyverse)
+library(haven)
+library(sjlabelled)
+
+gi_bill <- read_csv("Vetsgi.csv") 
+names(gi_bill) <- c("state", "prop_recipients", "recipients", "veterans", "year")
+
+
+ces <- 
+  read_dta("cumulative_2006-2021.dta") |>
+  sjlabelled::as_label() |>
+  filter(
+    year %in% seq(2010, 2015, by = 1),
+    no_milstat == "No",
+    pid3 %in% c("Democrat", "Republican"))
+
+
+
+
+```
+
+```{r}
+aggregate_pid3 <- ces |>
+  filter(pid3 %in% c("Democrat", "Republican")) |>
+  group_by(year, state, pid3) |>
+  summarize(n = n()) |>
+  mutate(prop = n/sum(n)) |>
+  select(-n) |>
+  pivot_wider(names_from = pid3, values_from = prop)
+
+merged_pid3 <- left_join(gi_bill, aggregate_pid3)
+
+merged_pid3 |>
+  ggplot(aes(x = Republican, y = prop_recipients)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+```
+
+
+
+
