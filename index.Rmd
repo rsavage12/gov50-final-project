@@ -59,6 +59,12 @@ merged_pid3 |>
 
 ```
 
+```{r}
+merged_pid3 |>
+  ggplot(aes(x = Democrat, y = prop_recipients)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+```
 
-
+We can see from the comparison of these two graphs is that states with a higher percentage of republicans tend to use the GI bill more, while states with a higher percentage of democrats tend to use the GI bill less. This is seen from the positive and negative sloping lines, respectively. 
 
