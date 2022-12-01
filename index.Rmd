@@ -41,6 +41,7 @@ ces <-
 
 ```
 
+
 ```{r}
 aggregate_pid3 <- ces |>
   filter(pid3 %in% c("Democrat", "Republican")) |>
@@ -52,19 +53,50 @@ aggregate_pid3 <- ces |>
 
 merged_pid3 <- left_join(gi_bill, aggregate_pid3)
 
+
 merged_pid3 |>
   ggplot(aes(x = Republican, y = prop_recipients)) +
   geom_point() +
   geom_smooth(method = "lm")
 
 ```
+```{r}
+merged_pid3 |>
+  ggplot(aes(x = prop_recipients)) +
+  geom_histogram(bins = 50) 
+```
+```{r}
+aggregate_gender <- ces |>
+  filter(gender %in% c("Male", "Female")) |>
+  group_by(year, state, gender)|>
+  summarize(n = n()) |>
+  mutate(prop = n/sum(n)) |>
+  select(-n) |>
+  pivot_wider(names_from = gender, values_from = prop)
+aggregate_gender
 
+merged_pid3 <- left_join(merged_pid3, aggregate_gender)
+
+lm1 <- lm(prop_recipients ~ Male + Republican, merged_pid3) 
+
+library(moderndive)
+get_regression_table(lm1)
+
+```
 ```{r}
 merged_pid3 |>
   ggplot(aes(x = Democrat, y = prop_recipients)) +
   geom_point() +
   geom_smooth(method = "lm")
 ```
+
+
+
+
+
+
+
+
 
 We can see from the comparison of these two graphs is that states with a higher percentage of republicans tend to use the GI bill more, while states with a higher percentage of democrats tend to use the GI bill less. This is seen from the positive and negative sloping lines, respectively. 
 
