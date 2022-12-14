@@ -115,7 +115,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","guide_cumulative_2006-2021.pdf","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/header-attrs-2.16/header-attrs.js","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","Veterans_who_used_GI_Bill_Education_Benefits.numbers","Vetsgi.csv"]}
+  {"type":"character","attributes":{},"value":["cumulative_2006-2021.dta","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-4-1.png","index_files/figure-html5/unnamed-chunk-5-1.png","index_files/header-attrs-2.17/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js","Vetsgi.csv"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1517,60 +1517,52 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
+<h2 id="introduction">Introduction</h2>
+<p>My project explores the proportion of recipients of the GI Bill out of all the veterans in each of the fifty states from 2010 to 2015. Specifically: my project asks does a states political orientation associate with use of the GI Bill.</p>
+<h2 id="data-and-research-design">Data and Research Design</h2>
+<p>To investigate this relationship, I am relying on the data from two different sources:</p>
+<ol type="1">
+<li><p><a href="https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits">Veterans who used GI Bill Education Benefits</a> (VGEB) data on the proportion of veterans that received the GI Bill for each state from 2010 to 2015;</p></li>
+<li><p><a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/II2DB6">Cumulative CCES Common Content</a> (CES) data on the political and gender orientation of the veterans.</p></li>
+</ol>
+<p>My analyses covers the proportion of recipients of the GI Bill for each year from 2010 to 2015 for each of the fifty states, and of those proportion of recipients, their political and gender orientation. My research design is longitudinal.</p>
+<p>VGEB provides me with the outcome variable, which is the proportion of recipients of the GI Bill, for all fifty states between the years 2010 and 2015. The outcome ranges from 0 to .08.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"Vetsgi.csv"</span><span class='op'>)</span></span></code></pre>
-</div>
-<pre><code># A tibble: 312 × 5
-   `State Name` Percent of Veterans who used G…¹ Numbe…² Veter…³  Year
-   &lt;chr&gt;                                   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;
- 1 Alabama                                0.0273   11226 411845.  2010
- 2 Alabama                                0.0259   10420 402854.  2011
- 3 Alabama                                0.0332   13145 395992.  2012
- 4 Alabama                                0.0381   14856 389780.  2013
- 5 Alabama                                0.0385   14850 385511.  2014
- 6 Alabama                                0.0313   11797 377310.  2015
- 7 Alaska                                 0.0323    2450  75897.  2010
- 8 Alaska                                 0.0306    2378  77641.  2011
- 9 Alaska                                 0.0475    3566  75056.  2012
-10 Alaska                                 0.0551    4178  75812.  2013
-# … with 302 more rows, and abbreviated variable names
-#   ¹​`Percent of Veterans who used GI Bill Education Benefits`,
-#   ²​`Number of Education Benefit Recipients`, ³​`Veteran Population`</code></pre>
-</div>
-<h2 id="project-thoughts">Project thoughts</h2>
-<p>My research question is what is affecting the veterans that have the G.I. Bill awarded to them after their service to not utilize it, in their perspective states from 2010-2015. The data I will be utilizing is from <a href="https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits" class="uri">https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits</a> and <a href="https://dataverse.harvard.edu/file.xhtml?fileId=6153230&amp;version=7.0" class="uri">https://dataverse.harvard.edu/file.xhtml?fileId=6153230&amp;version=7.0</a>. My hypothesis is that there can be multiple variables that can be the cause of this problem, such as: race, political affiliation, location, and socio-economic status. The explanatory variables are as listed before. To give an example of what my theory for one of the potential theories are is socio-economic status. Some veterans may have a low paying job and cannot afford to sacrifice their time to go to school and have to work instead. The outcome variable is the percentage of veterans out of the veterans in their perspective state that utilize their education benefits. The observed pattern in my hypothesis is that there are no states that has a one percent of veterans that use their education benefits. At this time I cannot find a pattern that could disprove my hypothesis from of these variables.</p>
-<h1 id="importing-and-cleaning-data">Importing and cleaning data</h1>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>aggregate_pid3</span> <span class='op'>&lt;-</span> <span class='va'>ces</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>pid3</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Democrat"</span>, <span class='st'>"Republican"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>year</span>, <span class='va'>state</span>, <span class='va'>pid3</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='va'>n</span><span class='op'>/</span><span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>n</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_wider.html'>pivot_wider</a></span><span class='op'>(</span>names_from <span class='op'>=</span> <span class='va'>pid3</span>, values_from <span class='op'>=</span> <span class='va'>prop</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>merged_pid3</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate-joins.html'>left_join</a></span><span class='op'>(</span><span class='va'>gi_bill</span>, <span class='va'>aggregate_pid3</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>merged_pid3</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Republican</span>, y <span class='op'>=</span> <span class='va'>prop_recipients</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span></span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>merged_pid3</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>Democrat</span>, y <span class='op'>=</span> <span class='va'>prop_recipients</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_point.html'>geom_point</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_smooth.html'>geom_smooth</a></span><span class='op'>(</span>method <span class='op'>=</span> <span class='st'>"lm"</span><span class='op'>)</span></span></code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>pid3_hist</span></span></code></pre>
 </div>
 <p><img src="index_files/figure-html5/unnamed-chunk-4-1.png" width="624" /></p>
 </div>
-<p>We can see from the comparison of these two graphs is that states with a higher percentage of republicans tend to use the GI bill more, while states with a higher percentage of democrats tend to use the GI bill less. This is seen from the positive and negative sloping lines, respectively.</p>
+<p>This histogram shows the distribution of the proportion of GI bill recipients by state and year.</p>
+<p>CES provides me with my explanatory variables, they are the <strong>political orientation</strong> of the recipients, which I will use for my bivariate plot, and <strong>gender</strong> of the recipients, which I will use for my multivariate regression model. Political orientation is measured by the proportion of republican veterans. Gender is measured by the proportion of male veterans.</p>
+<p>Although this project is focusing on the relationship of gender and political orientation associated with proportion of recipients, there are possible confounders that affect the results. These possible confounders could be veterans are more predominantly republican and veterans are more predominantly male.</p>
+<h2 id="results">Results</h2>
+<p>The relationship between proportion of recipients and republican veterans can be visualized with a scatter plot. The x-axis has the explanatory variable, which is political orientation, and I will be focusing on the republican veterans. The y-axis has the dependent variable, which is the proportion of recipients.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>bivariate</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-5-1.png" width="624" /></p>
+</div>
+<p>My results reveal that there is a positive relationship associated with republican orientation and proportion of recipients, meaning the more republican veterans there are in the state, the proportion of recipients increases. Also, because the data has been filtered down to only include democrat or republican veterans, this outcome reveals that the proportion of recipients decreases when the state is associated with more democrat veterans.</p>
+<h3 id="regression-results">Regression results</h3>
+<p>The relationship between the two explanatory variables and the proportion of recipients is shown below on my multivariate regression model.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://moderndive.github.io/moderndive/'>moderndive</a></span><span class='op'>)</span></span>
+<span><span class='fu'><a href='moderndive.github.io/moderndive/reference/get_regression_table.html'>get_regression_table</a></span><span class='op'>(</span><span class='va'>lm1</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 3 × 7
+  term       estimate std_error statistic p_value lower_ci upper_ci
+  &lt;chr&gt;         &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 intercept     0.023     0.005     4.51    0        0.013    0.032
+2 Male         -0.004     0.009    -0.399   0.69    -0.021    0.014
+3 Republican    0.019     0.005     3.50    0.001    0.008    0.029</code></pre>
+</div>
+<p>This regression table suggests on average that being male will be associated with a decrease in the uptake of the GI Bill by 0.4%, and being republican will increase the uptake of the GI Bill by 1.9%. A confidence interval explains how good of an estimate the data is, and it is visualized by a range between a lower and upper CI. The numbers between the upper and lower CI symbolizes what the potential numbers the mean could be. The confidence interval for being male is -0.021 to 0.014. The CI for male also includes zero, therefore, it is plausible that the true population parameter could be zero, meaning it is possible that males do not have an affect on the proportion of recipients. The confidence interval for being Republican is 0.008 to 0.029. The coefficient estimates on average is 0.023, while holding the variables constant.</p>
+<p>The p-value results within the multivariate model displays 0.690 for the male explanatory variable and 0.001 for the republican explanatory variable. The results for the republican variable are statistically significant because the p-value is way below 0.05,. The results of the regression for a difference in male or female veterans in uptake has a p-value of 0.69 and is not statistically significant.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The bivariate and multivariate plot show that the republican orientation is associated with a positive relationship on the proportion of GI Bill recipients in all fifty states during the 2010-2015 time period. However, the male explanatory variable, that was tested in the multivariate model does not have a statistically significant effect on the proportion of male recipients. The limitations to this study is that it does not take into account other variables that could have a possible effect on this data, and not just political and gender orientation. The limitations of this study points out what can be done to improve this study. Including other explanatory variables, such as, socioeconomic status of the veterans in each state, age, dependents, years of service, and branch can help improve this study. As mentioned earlier, there are possible confounders that could affect the results, therefore, the confounders should be taken into account to improve this study.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->

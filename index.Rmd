@@ -7,18 +7,27 @@ output:
     self_contained: false
 ---
 
-```{r}
+```{r, include=FALSE}
 library(tidyverse)
-read_csv("Vetsgi.csv")
+
 ```
 
+## Introduction
 
-## Project thoughts
+My project explores the proportion of recipients of the GI Bill out of all the veterans in each of the fifty states from 2010 to 2015. Specifically: my project asks does a states political orientation associate with use of the GI Bill.
 
-My research question is what is affecting the veterans that have the G.I. Bill awarded to them after their service to not utilize it, in their perspective states from 2010-2015. The data I will be utilizing is from https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits and https://dataverse.harvard.edu/file.xhtml?fileId=6153230&version=7.0. My hypothesis is that there can be multiple variables that can be the cause of this problem, such as: race, political affiliation, location, and socio-economic status. The explanatory variables are as listed before. To give an example of what my theory for one of the potential theories are is socio-economic status. Some veterans may have a low paying job and cannot afford to sacrifice their time to go to school and have to work instead. The outcome variable is the percentage of veterans out of the veterans in their perspective state that utilize their education benefits. The observed pattern in my hypothesis is that there are no states that has a one percent of veterans that use their education benefits. At this time I cannot find a pattern that could disprove my hypothesis from of these variables. 
+## Data and Research Design
 
+To investigate this relationship, I am relying on the data from two different sources:
 
-# Importing and cleaning data 
+1.  [Veterans who used GI Bill Education Benefits](https://catalog.data.gov/dataset/veterans-who-used-gi-bill-education-benefits) (VGEB) data on the proportion of veterans that received the GI Bill for each state from 2010 to 2015;
+
+2.  [Cumulative CCES Common Content](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/II2DB6) (CES) data on the political and gender orientation of the veterans.
+
+My analyses covers the proportion of recipients of the GI Bill for each year from 2010 to 2015 for each of the fifty states, and of those proportion of recipients, their political and gender orientation. My research design is longitudinal.
+
+VGEB provides me with the outcome variable, which is the proportion of recipients of the GI Bill, for all fifty states between the years 2010 and 2015. The outcome ranges from 0 to .08.
+
 ```{r include=FALSE}
 library(tidyverse)
 library(haven)
@@ -41,8 +50,7 @@ ces <-
 
 ```
 
-
-```{r}
+```{r, include=FALSE}
 aggregate_pid3 <- ces |>
   filter(pid3 %in% c("Democrat", "Republican")) |>
   group_by(year, state, pid3) |>
@@ -53,19 +61,48 @@ aggregate_pid3 <- ces |>
 
 merged_pid3 <- left_join(gi_bill, aggregate_pid3)
 
+pid3_hist <- merged_pid3 |>
+  ggplot(aes(x = prop_recipients)) +
+  geom_histogram(bins = 50) +
+  labs(title = "Distribution of GI Bill uptake",
+       x = "Uptake",
+       y = "Count")
 
-merged_pid3 |>
+bivariate <- merged_pid3 |>
   ggplot(aes(x = Republican, y = prop_recipients)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title = "Proportion of Republican Veterans and GI Bill uptake",
+       x = "Proportion Republican",
+       y = "Proportion Recipients")
 
 ```
+
 ```{r}
-merged_pid3 |>
-  ggplot(aes(x = prop_recipients)) +
-  geom_histogram(bins = 50) 
+pid3_hist
 ```
+
+This histogram shows the distribution of the proportion of GI bill recipients by state and year.
+
+CES provides me with my explanatory variables, they are the **political orientation** of the recipients, which I will use for my bivariate plot, and **gender** of the recipients, which I will use for my multivariate regression model. Political orientation is measured by the proportion of republican veterans. Gender is measured by the proportion of male veterans.
+
+Although this project is focusing on the relationship of gender and political orientation associated with proportion of recipients, there are possible confounders that affect the results. These possible confounders could be veterans are more predominantly republican and veterans are more predominantly male.
+
+## Results
+
+The relationship between proportion of recipients and republican veterans can be visualized with a scatter plot. The x-axis has the explanatory variable, which is political orientation, and I will be focusing on the republican veterans. The y-axis has the dependent variable, which is the proportion of recipients.
+
 ```{r}
+bivariate
+```
+
+My results reveal that there is a positive relationship associated with republican orientation and proportion of recipients, meaning the more republican veterans there are in the state, the proportion of recipients increases. Also, because the data has been filtered down to only include democrat or republican veterans, this outcome reveals that the proportion of recipients decreases when the state is associated with more democrat veterans.
+
+### Regression results
+
+The relationship between the two explanatory variables and the proportion of recipients is shown below on my multivariate regression model.
+
+```{r,include=FALSE}
 aggregate_gender <- ces |>
   filter(gender %in% c("Male", "Female")) |>
   group_by(year, state, gender)|>
@@ -78,25 +115,18 @@ aggregate_gender
 merged_pid3 <- left_join(merged_pid3, aggregate_gender)
 
 lm1 <- lm(prop_recipients ~ Male + Republican, merged_pid3) 
+```
 
+```{r}
 library(moderndive)
 get_regression_table(lm1)
 
 ```
-```{r}
-merged_pid3 |>
-  ggplot(aes(x = Democrat, y = prop_recipients)) +
-  geom_point() +
-  geom_smooth(method = "lm")
-```
 
+This regression table suggests on average that being male will be associated with a decrease in the uptake of the GI Bill by 0.4%, and being republican will increase the uptake of the GI Bill by 1.9%. A confidence interval explains how good of an estimate the data is, and it is visualized by a range between a lower and upper CI. The numbers between the upper and lower CI symbolizes what the potential numbers the mean could be. The confidence interval for being male is -0.021 to 0.014. The CI for male also includes zero, therefore, it is plausible that the true population parameter could be zero, meaning it is possible that males do not have an affect on the proportion of recipients. The confidence interval for being Republican is 0.008 to 0.029. The coefficient estimates on average is 0.023, while holding the variables constant.
 
+The p-value results within the multivariate model displays 0.690 for the male explanatory variable and 0.001 for the republican explanatory variable. The results for the republican variable are statistically significant because the p-value is way below 0.05,. The results of the regression for a difference in male or female veterans in uptake has a p-value of 0.69 and is not statistically significant.
 
+## Conclusion
 
-
-
-
-
-
-We can see from the comparison of these two graphs is that states with a higher percentage of republicans tend to use the GI bill more, while states with a higher percentage of democrats tend to use the GI bill less. This is seen from the positive and negative sloping lines, respectively. 
-
+The bivariate and multivariate plot show that the republican orientation is associated with a positive relationship on the proportion of GI Bill recipients in all fifty states during the 2010-2015 time period. However, the male explanatory variable, that was tested in the multivariate model does not have a statistically significant effect on the proportion of male recipients. The limitations to this study is that it does not take into account other variables that could have a possible effect on this data, and not just political and gender orientation. The limitations of this study points out what can be done to improve this study. Including other explanatory variables, such as, socioeconomic status of the veterans in each state, age, dependents, years of service, and branch can help improve this study. As mentioned earlier, there are possible confounders that could affect the results, therefore, the confounders should be taken into account to improve this study.
